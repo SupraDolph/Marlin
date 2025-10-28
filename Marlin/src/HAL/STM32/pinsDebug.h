@@ -2,6 +2,9 @@
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
  *
+ * Based on Sprinter and grbl.
+ * Copyright (c) 2011 Camiel Gubbels / Erik van der Zalm
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -109,6 +112,7 @@ const XrefInfo pin_xref[] PROGMEM = {
 #define VALID_PIN(ANUM) ((ANUM) >= 0 && (ANUM) < NUMBER_PINS_TOTAL)
 #define digitalRead_mod(Ard_num) extDigitalRead(Ard_num)  // must use Arduino pin numbers when doing reads
 #define PRINT_PIN(Q)
+#define PRINT_PIN_ANALOG(p) do{ sprintf_P(buffer, PSTR(" (A%2d)  "), DIGITAL_PIN_TO_ANALOG_PIN(pin)); SERIAL_ECHO(buffer); }while(0)
 #define PRINT_PORT(ANUM) port_print(ANUM)
 #define DIGITAL_PIN_TO_ANALOG_PIN(ANUM) -1  // will report analog pin number in the print port routine
 #define GET_PIN_MAP_PIN_M43(Index) pin_xref[Index].Ard_num
@@ -203,6 +207,7 @@ bool pwm_status(const pin_t Ard_num) {
 }
 
 void pwm_details(const pin_t Ard_num) {
+  bool show_timer = false;
   #ifndef STM32F1xx
     if (pwm_status(Ard_num)) {
       uint32_t alt_all = 0;
@@ -236,14 +241,14 @@ void pwm_details(const pin_t Ard_num) {
       if (over_7) pin_number -= 8;
 
       uint8_t alt_func = (alt_all >> (4 * pin_number)) & 0x0F;
-      SERIAL_ECHOPAIR("Alt Function: ", alt_func);
+      SERIAL_ECHOPGM("Alt Function: ", alt_func);
       if (alt_func < 10) SERIAL_CHAR(' ');
       SERIAL_ECHOPGM(" - ");
       switch (alt_func) {
         case  0 : SERIAL_ECHOPGM("system (misc. I/O)"); break;
-        case  1 : SERIAL_ECHOPGM("TIM1/TIM2 (probably PWM)"); break;
-        case  2 : SERIAL_ECHOPGM("TIM3..5 (probably PWM)"); break;
-        case  3 : SERIAL_ECHOPGM("TIM8..11 (probably PWM)"); break;
+        case  1 :
+        case  2 :
+        case  3 : SERIAL_ECHOPGM("PWM"); show_timer = true; break;
         case  4 : SERIAL_ECHOPGM("I2C1..3"); break;
         case  5 : SERIAL_ECHOPGM("SPI1/SPI2"); break;
         case  6 : SERIAL_ECHOPGM("SPI3"); break;
@@ -260,5 +265,19 @@ void pwm_details(const pin_t Ard_num) {
     }
   #else
     // TODO: F1 doesn't support changing pins function, so we need to check the function of the PIN and if it's enabled
+    show_timer = true;
   #endif
+
+  if (show_timer && PWM_PIN(Ard_num)) {
+    const PinName dp = digitalPinToPinName(Ard_num);
+    uint32_t func = pinmap_function(dp, PinMap_PWM);
+    if (func != uint32_t(NC)) {
+      TIM_TypeDef *Instance = (TIM_TypeDef *)pinmap_peripheral(dp, PinMap_PWM);
+      uint8_t tim_index = uint8_t(get_timer_index(Instance) + 1);
+      uint8_t tim_chan = uint8_t(STM_PIN_CHANNEL(func));
+      SERIAL_ECHOPGM(" TIM", tim_index);
+      SERIAL_ECHOPGM("_CH", tim_chan);
+    }
+  }
+
 } // pwm_details

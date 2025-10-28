@@ -1,8 +1,7 @@
 # Marlin 3D Printer Firmware
 
-## for Longer3D LK1/LK2 & Alfawise U20/U20+/U30
+### for Longer3D LK1/LK1+/LK2/LK4 & Alfawise U20/U20+/U30 (with a STM32 F103VE Chip)
 
-[![Build Status](https://travis-ci.org/tpruvot/Marlin.svg?branch=dev)](https://travis-ci.org/tpruvot/Marlin)
 ![GitHub](https://img.shields.io/github/license/tpruvot/marlin.svg)
 ![GitHub contributors](https://img.shields.io/github/contributors/tpruvot/marlin.svg)
 

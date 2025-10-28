@@ -99,14 +99,14 @@ void GcodeSuite::M600() {
 
   #if ENABLED(HOME_BEFORE_FILAMENT_CHANGE)
     // If needed, home before parking for filament change
-    if (!all_axes_trusted()) home_all_axes(true);
+    home_if_needed(true);
   #endif
 
   #if HAS_MULTI_EXTRUDER
     // Change toolhead if specified
     const uint8_t active_extruder_before_filament_change = active_extruder;
     if (active_extruder != target_extruder && TERN1(DUAL_X_CARRIAGE, !idex_is_duplicating()))
-      tool_change(target_extruder, false);
+      tool_change(target_extruder);
   #endif
 
   // Initial retract before move to filament change position
@@ -159,7 +159,7 @@ void GcodeSuite::M600() {
   #if HAS_MULTI_EXTRUDER
     // Restore toolhead if it was changed
     if (active_extruder_before_filament_change != active_extruder)
-      tool_change(active_extruder_before_filament_change, false);
+      tool_change(active_extruder_before_filament_change);
   #endif
 
   TERN_(MIXING_EXTRUDER, mixer.T(old_mixing_tool)); // Restore original mixing tool
