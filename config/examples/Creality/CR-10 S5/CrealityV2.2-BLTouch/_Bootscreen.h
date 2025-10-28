@@ -21,8 +21,6 @@
  */
 #pragma once
 
-#define CONFIG_EXAMPLES_DIR "Creality/CR-10 S5/CrealityV2.2-BLTouch"
-
 /**
  * Custom Boot Screen bitmap
  *

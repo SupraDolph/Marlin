@@ -21,8 +21,6 @@
  */
 #pragma once
 
-#define CONFIG_EXAMPLES_DIR "Creality/Ender-3/BigTreeTech E3 RRF"
-
 /**
  * Custom Boot Screen bitmap
  *

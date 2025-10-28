@@ -21,8 +21,6 @@
  */
 #pragma once
 
-#define CONFIG_EXAMPLES_DIR "Creality/Ender-3/TH3D EZBoard Lite V2"
-
 /**
  * Custom Boot Screen bitmap
  *

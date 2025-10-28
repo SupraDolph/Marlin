@@ -19,7 +19,7 @@
 
 #include "../../inc/MarlinConfigPre.h"
 
-#if BOTH(HAS_LCD_MENU, TOUCH_SCREEN_CALIBRATION)
+#if ALL(HAS_MARLINUI_MENU, TOUCH_SCREEN_CALIBRATION)
 
 #include "menu_item.h"
 #include "../marlinui.h"
@@ -30,21 +30,21 @@ void touch_screen_calibration() {
 
 void menu_touch_screen() {
   START_MENU();
-  BACK_ITEM(MSG_MAIN);
+  BACK_ITEM(MSG_MAIN_MENU);
   MENU_ITEM(submenu, MSG_CALIBRATION, touch_screen_calibration);
 #ifdef TS_V11
-  STATIC_ITEM_P("ILI9341 v1.1", SS_LEFT);
+  STATIC_ITEM_F(F("ILI9341 v1.1"), SS_LEFT);
 #elif defined(TS_V12)
-  STATIC_ITEM_P("ILI9341 v1.2", SS_LEFT);
+  STATIC_ITEM_F(F("ILI9341 v1.2"), SS_LEFT);
 #elif defined(TS_V19)
-  STATIC_ITEM_P("ILI9341 2019", SS_LEFT);
+  STATIC_ITEM_F(F("ILI9341 2019"), SS_LEFT);
 #endif
   {
     char line[20];
     snprintf(line, 20, "X: %d %d", int(touch_calibration.calibration.x), int(touch_calibration.calibration.offset_x));
-    STATIC_ITEM_P(line, SS_LEFT);
+    STATIC_ITEM_F(F(line), SS_LEFT);
     snprintf(line, 20, "Y: %d %d", int(touch_calibration.calibration.y), int(touch_calibration.calibration.offset_y));
-    STATIC_ITEM_P(line, SS_LEFT);
+    STATIC_ITEM_F(F(line), SS_LEFT);
   }
   END_MENU();
 }

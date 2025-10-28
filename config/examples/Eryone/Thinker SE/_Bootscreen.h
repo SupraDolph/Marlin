@@ -26,8 +26,6 @@
  */
 #pragma once
 
-#define CONFIG_EXAMPLES_DIR "Eryone/Thinker SE"
-
 #define CUSTOM_BOOTSCREEN_BMPWIDTH  128
 
 const unsigned char custom_start_bmp[] PROGMEM = {

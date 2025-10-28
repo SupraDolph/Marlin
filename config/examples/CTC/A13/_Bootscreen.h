@@ -21,8 +21,6 @@
  */
 #pragma once
 
-#define CONFIG_EXAMPLES_DIR "CTC/A13"
-
 /**
  * Custom Boot Screen bitmap
  *
