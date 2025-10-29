@@ -16,7 +16,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
 
@@ -27,8 +27,6 @@
  * This bitmap from 56x19 C/C++ data
  */
 #pragma once
-
-#define CONFIG_EXAMPLES_DIR "Creality/CR-30 PrintMill"
 
 #define STATUS_SCREEN_X 64
 #define STATUS_LOGO_WIDTH 48

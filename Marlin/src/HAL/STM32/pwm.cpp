@@ -44,7 +44,7 @@ void pwmSetFrequency(const uint8_t timer_num, uint16_t freq) {
 // Can reduce memory footprint, if pwmFrequencies array not used
 uint16_t pwmGetDefaultFrequency(const pin_t pin) {
   switch(pin) {
-  case FAN_PIN:
+  case FAN0_PIN:
   #if PIN_EXISTS(FAN1)
     case FAN1_PIN:
   #endif

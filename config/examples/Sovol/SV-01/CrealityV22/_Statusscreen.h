@@ -21,8 +21,6 @@
  */
 #pragma once
 
-#define CONFIG_EXAMPLES_DIR "Sovol/SV-01/CrealityV22"
-
 /**
  * Custom Status Screen bitmap
  *
@@ -33,7 +31,6 @@
  * https://marlinfw.org/tools/u8glib/converter.html
  */
 
-#define STATUS_LOGO_Y      8
 #define STATUS_LOGO_WIDTH 32
 
 const unsigned char status_logo_bmp[] PROGMEM = {

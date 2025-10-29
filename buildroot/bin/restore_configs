@@ -9,3 +9,4 @@ BKUP="$PINS/ramps/pins_RAMPS.backup.h"
 
 rm -f Marlin/_Bootscreen.h
 rm -f Marlin/_Statusscreen.h
+rm -f marlin_config.json .pio/build/mc.zip
